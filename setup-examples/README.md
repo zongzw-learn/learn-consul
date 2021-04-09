@@ -1,0 +1,1 @@
+This is a set of **Ansible** scripts for setting up consul in cluster mode.
