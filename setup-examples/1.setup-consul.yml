@@ -32,12 +32,25 @@
         - conf.d
         - data.d
 
+
 - hosts: consul_servers
   remote_user: root
   gather_facts: false
   tasks:
-    # - name: create watch configuration
-    #   ...
+    - name: copy scripts to server
+      copy:
+        src: ./scripts/refresh-upstream.sh
+        dest: /tmp/refresh-upstream.sh
+      
+    - name: create watch configuration
+      template:
+        src: ./templates/consul-watches.json.j2
+        dest: /root/consul.d/conf.d/watch-{{ item }}.json
+      vars:
+        service_name: "{{ item }}-80"
+        service_tags: "web-server"
+        service_ip: "{{ item }}"
+      with_items: "{{ groups['web_servers'] }}"
 
 
 - hosts: consul_clients

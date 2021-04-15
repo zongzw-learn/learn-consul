@@ -1,0 +1,14 @@
+{
+    "watches": [
+        {
+            "type": "service",
+            "state": "passing",
+            "args": ["/tmp/refresh-upstream.sh", "{{ nginx_node }}", "add", "{{ service_ip }}"]
+        },
+        {
+            "type": "checks",
+            "state": "critical",
+            "args": ["/tmp/refresh-upstream.sh", "{{ nginx_node }}", "remove", "{{ service_ip }}"]
+        }
+    ]
+}
